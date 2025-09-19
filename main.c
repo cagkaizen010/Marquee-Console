@@ -1,49 +1,43 @@
+#include "commands.c"
+#include "ui.c"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-void display_menu() {
-    system("cls"); 
-
-    printf("--- CSOPESY Marquee Console ---\n");
-    printf("help\n");
-    printf("start_marquee\n");
-    printf("stop_marquee\n");
-    printf("set_text\n");
-    printf("set_speed\n");
-    printf("exit\n");
-}
-
-
-void conclusion_msg() {
-    printf("Press enter to exit...");
-    while(getchar() != '\n');
-    exit;
-    // getchar();
-}
 
 int main()  {
-    int choice;
+    char choice[20];
     display_menu();
+    input_format();
     do {
+        // Format initial input
+        scanf("%s", &choice);
 
-        scanf("%d", &choice);
-        switch(choice) {
-            case 1:
-                system("cls"); 
-                printf("Meow\n");
-                conclusion_msg();
-                break;
-            case 2:
-                system("cls"); 
-                printf("Woof\n");
-                conclusion_msg();
-                break;
-            case 3:
-                system("cls"); 
-                printf("Exiting...");
-                break;
+        if(strcmp(choice, "help") == 0){
+            help();
+            input_format();
+        }
+
+        if(strcmp(choice, "start_marquee") == 0){
+            start_marquee();
+            input_format();
+        }
+
+        if(strcmp(choice, "stop_marquee") == 0){
+            stop_marquee();
+            input_format();
+        }
+
+        if(strcmp(choice, "set_text") == 0){
+            set_text();
+            input_format();
+        }
+
+        if(strcmp(choice, "set_speed") == 0){
+            set_speed();
+            input_format();
         }
     } 
-    while ( choice != 3);
+    while ( !(strcmp(choice, "exit") == 0));
     return 0;
 }
