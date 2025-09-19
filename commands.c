@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <windows.h>
+// #include <windows.h>
 #include <conio.h>
 
 int SPEED = 50;
@@ -80,8 +80,6 @@ void start_marquee() {
     stop_marquee();
     return;
 }
-
-
 
 void set_text() {
 
