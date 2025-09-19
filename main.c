@@ -25,6 +25,7 @@ int main()  {
 
         if(strcmp(choice, "stop_marquee") == 0){
             stop_marquee();
+            display_menu();
             input_format();
         }
 
@@ -35,6 +36,13 @@ int main()  {
 
         if(strcmp(choice, "set_speed") == 0){
             set_speed();
+            input_format();
+        }
+
+        // Added additional option for ease of testing
+        if(strcmp(choice, "clear") == 0) {
+            system("cls");
+            display_menu();
             input_format();
         }
     } 

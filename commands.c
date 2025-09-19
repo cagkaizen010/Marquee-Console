@@ -4,27 +4,84 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
+#include <conio.h>
+
+int SPEED = 50;
+char TEXT[50] = "OH YES BETA WELCOME!";
 
 void help() {
-    system("cls");
-    printf("start_marquee\n");
-    printf("stop_marquee\n");
-    printf("set_text\n");
-    printf("set_speed\n");
-    printf("exit\n");
+//     system("cls");
+    // printf("\n");
 
-}
+    printf("\n");
+    printf("\tCOMMANDS\t\tDESCRIPTION\n");
+    printf("\n");
 
-void start_marquee() {
-    system("cls");
-    printf("start_marquee was selected");
+    printf("\thelp\t\t\t");
+    printf("Display the options for help\n");
+
+    printf("\tstart_marquee\t\t");
+    printf("Start the marquee animation\n");
+
+    printf("\tstop_marquee\t\t");
+    printf("Stop the marquee animation\n");
+
+    printf("\tset_text <string>\t");
+    printf("Set the text displayed in the marquee\n");
+
+    printf("\tset_speed <ms>\t\t");
+    printf("Set the speed of the marquee animation\n");
+
+    printf("\texit\t\t\t");
+    printf("Exit the program\n");
+
+    printf("\n");
 }
 
 void stop_marquee() {
 
     system("cls");
-    printf("stop_marquee was selected");
+    printf("stop_marquee was selected\n");
 }
+
+void start_marquee() {
+    system("cls");
+    char choice[20];
+
+    char empty_string[100];
+    int padding = strlen(TEXT);
+
+    for(int i = 0; i < padding; i++)
+        empty_string[i] = ' ';
+    empty_string[padding] = '\0';
+
+    strcat(empty_string, TEXT);
+
+    printf("%s\n", empty_string);
+
+    do {
+        for( int i = 0; i <= strlen(empty_string); i++ ){
+            while (kbhit()){
+                printf("> ");
+                scanf("%s", choice);
+                if(strcmp(choice, "stop_marquee") == 0) {
+                    stop_marquee();
+                    break;
+                }
+            } 
+            if(strcmp(choice, "stop_marquee") == 0) break;
+            system("cls");
+            printf("%.*s\n", strlen(TEXT), empty_string+ i);
+            Sleep(SPEED);
+        }
+    } while (!(strcmp(choice, "stop_marquee") == 0));
+
+    stop_marquee();
+    return;
+}
+
+
 
 void set_text() {
 

@@ -3,7 +3,7 @@
 
 void input_format() {
 
-    printf("> ");
+    printf("CSOPESY> ");
 }
 
 void display_menu() {
