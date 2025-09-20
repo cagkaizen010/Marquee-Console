@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// #include <windows.h>
+#include <windows.h>
 #include <conio.h>
 
 int SPEED = 50;
@@ -83,7 +83,7 @@ void start_marquee() {
 
 void set_text() {
 
-    system("clear");
+    system("cls");
     printf("set_text was selected\n");
     
     int c;
@@ -101,7 +101,7 @@ void set_text() {
 
 void set_speed() {
 
-    system("clear");
+    system("cls");
     printf("set_speed was selected\n");
 
     int c;
