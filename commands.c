@@ -105,7 +105,6 @@ void set_speed() {
     printf("set_speed was selected\n");
 
     int c;
-    printf("Please enter new speed(int): ");
 
     while (TRUE) {
         printf("Please enter new speed (integer): ");
