@@ -83,15 +83,45 @@ void start_marquee() {
 
 void set_text() {
 
-    system("cls");
-    printf("set_text was selected");
+    system("clear");
+    printf("set_text was selected\n");
+    
+    int c;
+    printf("Please enter new text: "); 
+
+    while ((c = getchar()) != '\n') { 
+        }
+        
+    fgets(TEXT, sizeof(TEXT), stdin);
+    TEXT[strcspn(TEXT, "\n")] = '\0';
+
+    printf("MARQUEE updated successfully!\n");
 
 }
 
 void set_speed() {
 
-    system("cls");
-    printf("set_speed was selected");
+    system("clear");
+    printf("set_speed was selected\n");
+
+    int c;
+    printf("Please enter new speed(int): ");
+
+    while (TRUE) {
+        printf("Please enter new speed (integer): ");
+
+        if (scanf("%d", &SPEED) == 1) {
+            while ((c = getchar()) != '\n') { 
+                }
+            printf("SPEED updated successfully!\n");
+            break;
+        } 
+        else {
+            while ((c = getchar()) != '\n') { 
+                }
+            printf("Invalid input. Please input an integer.\n");
+        }
+    }
 
 }
 
