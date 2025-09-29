@@ -81,7 +81,7 @@ void marquee_logic_thread_func(int display_width) {
         // if (prompt_display_buffer == "set_text"){
 
         if (i >= empty_string.length()) i = 0;
-            std::unique_lock<std::mutex> lock_string(string_mutex);
+        std::unique_lock<std::mutex> lock_string(string_mutex);
         //     std::string empty_string = TEXT_x;
         //     lock_string.unlock();
         // }
