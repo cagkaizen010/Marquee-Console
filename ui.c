@@ -21,5 +21,32 @@ void display_menu() {
         printf("-");
     printf("\n");
 }
+void help() {
+//     system("cls");
+    // printf("\n");
 
+    printf("\n");
+    printf("\tCOMMANDS\t\tDESCRIPTION\n");
+    printf("\n");
+
+    printf("\thelp\t\t\t");
+    printf("Display the options for help\n");
+
+    printf("\tstart_marquee\t\t");
+    printf("Start the marquee animation\n");
+
+    printf("\tstop_marquee\t\t");
+    printf("Stop the marquee animation\n");
+
+    printf("\tset_text <string>\t");
+    printf("Set the text displayed in the marquee\n");
+
+    printf("\tset_speed <ms>\t\t");
+    printf("Set the speed of the marquee animation\n");
+
+    printf("\texit\t\t\t");
+    printf("Exit the program\n");
+
+    printf("\n");
+}
 #endif
