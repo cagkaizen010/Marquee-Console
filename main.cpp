@@ -32,9 +32,11 @@ std::mutex marquee_to_display_mutex;
 
 
 //// User created variables
-// std::atomic<char> currentKey{' '};
-int SPEED = 200;
+// int SPEED = 200;
+
+std::atomic<int> SPEED(200);
 std::string TEXT_x = "HELLO WORLD";
+std::mutex string_mutex;
 
 // --- Utility Function ---
 // Moves the cursor to a specific (x, y) coordinate on the console.
@@ -55,29 +57,56 @@ void keyboard_handler_thread_func() {
     }
 }
 
+
+/*
+    THERE ARE BUGS:
+    Throws segmentation faults, they SOMETIMES
+    occur when you set_text with a string shorter than the current one.
+        - possible fix is around the iterator i, could be a nonexistent empty_string index after the change.
+    
+
+    Have to adjust the animation so that it displays the last letter of the string
+    when it goes all the way to the left.
+*/
 void marquee_logic_thread_func(int display_width) {
 
-    std::string empty_string = TEXT_x;
+        // std::unique_lock<std::mutex> lock(string_mutex);
+        std::string empty_string = TEXT_x;
+        // lock.unlock();
 
     int i = 1;
     while (is_running) {
         // Marquee logic goes here...
 
+        // if (prompt_display_buffer == "set_text"){
+
+        if (i >= empty_string.length()) i = 0;
+            std::unique_lock<std::mutex> lock_string(string_mutex);
+        //     std::string empty_string = TEXT_x;
+        //     lock_string.unlock();
+        // }
+
+        empty_string = TEXT_x;
+
         std::unique_lock<std::mutex> lock(marquee_to_display_mutex);
         // Print the padding first
         for(int j = 0; j < empty_string.length()- i - 1; ++j)
             marquee_display_buffer += " ";
-
+// 
         for(int j = 0; j <= i; ++j)
             marquee_display_buffer += empty_string[j];
-
+// 
         lock.unlock();
+
+        lock_string.unlock();
+        // marquee_display_buffer = empty_string;
+
+
 
         std::this_thread::sleep_for(std::chrono::milliseconds(SPEED));
         marquee_display_buffer = "";
         i++;
 
-        if (i >= empty_string.length()) i = 0;
     }
 }
 
@@ -193,22 +222,29 @@ int main() {
             }
 
             if(arg1 == "set_speed"){
-                std::unique_lock<std::mutex> lock(prompt_mutex);
-                prompt_display_buffer = "set_speed";
-                lock.unlock();
+                // std::unique_lock<std::mutex> lock(prompt_mutex);
+                // prompt_display_buffer = "set_speed";
+                // lock.unlock();
+
+                std::cout << std::stoi(arg2) << std::endl;
+                SPEED = std::stoi(arg2);
             }
 
             if(arg1 == "set_text"){
-                // std::unique_lock<std::mutex> lock(prompt_mutex);
-
+                // std::unique_lock<std::mutex> prompt_lock(prompt_mutex);
+                // prompt_display_buffer = "set_text";
+                // prompt_lock.unlock();
                 // preserve current state
                 // std::string temp = prompt_display_buffer
 
 
-                std::unique_lock<std::mutex> lock(marquee_to_display_mutex);
+                std::unique_lock<std::mutex> lock(string_mutex);
                 TEXT_x = arg2;
                 // prompt_display_buffer = "set_text";
                 lock.unlock();
+                // system("cls");
+                // std::cout << TEXT_x << std::endl;
+                // std::this_thread::sleep_for(std::chrono::milliseconds(5000));
             }
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
