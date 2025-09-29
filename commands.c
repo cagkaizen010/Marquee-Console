@@ -7,7 +7,7 @@
 #include <windows.h>
 #include <conio.h>
 
-int SPEED = 50;
+// int SPEED = 50;
 char TEXT[50] = "OH YES BETA WELCOME!";
 
 void help() {
@@ -62,18 +62,18 @@ void start_marquee() {
 
     do {
         for( int i = 0; i <= strlen(empty_string); i++ ){
-            while (kbhit()){
-                printf("> ");
-                scanf("%s", choice);
-                if(strcmp(choice, "stop_marquee") == 0) {
-                    stop_marquee();
-                    break;
-                }
-            } 
+            // while (kbhit()){
+            //     printf("> ");
+            //     scanf("%s", choice);
+            //     if(strcmp(choice, "stop_marquee") == 0) {
+            //         stop_marquee();
+            //         break;
+            //     }
+            // } 
             if(strcmp(choice, "stop_marquee") == 0) break;
             system("cls");
             printf("%.*s\n", strlen(TEXT), empty_string+ i);
-            Sleep(SPEED);
+            Sleep(500);
         }
     } while (!(strcmp(choice, "stop_marquee") == 0));
 
@@ -110,7 +110,7 @@ void set_speed() {
     while (TRUE) {
         printf("Please enter new speed (integer): ");
 
-        if (scanf("%d", &SPEED) == 1) {
+        if (scanf("%d", 500) == 1) {
             while ((c = getchar()) != '\n') { 
                 }
             printf("SPEED updated successfully!\n");
