@@ -77,36 +77,39 @@ void marquee_logic_thread_func(int display_width) {
     int i = 1;
     while (is_running) {
         // Marquee logic goes here...
+        {
 
-        // if (prompt_display_buffer == "set_text"){
+            std::unique_lock<std::mutex> lock_string(string_mutex);
+            std::cout << i<< std::endl;
+            if (i >= empty_string.length()) i = 0;
+            //     std::string empty_string = TEXT_x;
+            //     lock_string.unlock();
+            // }
 
-        if (i >= empty_string.length()) i = 0;
-        std::unique_lock<std::mutex> lock_string(string_mutex);
-        //     std::string empty_string = TEXT_x;
-        //     lock_string.unlock();
-        // }
+            //git 
+            empty_string = TEXT_x;
+        }
 
-        empty_string = TEXT_x;
+        {
+            std::unique_lock<std::mutex> lock(marquee_to_display_mutex);
+            // Print the padding first
+            for(int j = 0; j < empty_string.length()- i - 1; ++j)
+                marquee_display_buffer += " ";
+ 
+            for(int j = 0; j <= i; ++j)
+                marquee_display_buffer += empty_string[j];
+ 
+            // lock.unlock();
 
-        std::unique_lock<std::mutex> lock(marquee_to_display_mutex);
-        // Print the padding first
-        for(int j = 0; j < empty_string.length()- i - 1; ++j)
-            marquee_display_buffer += " ";
-// 
-        for(int j = 0; j <= i; ++j)
-            marquee_display_buffer += empty_string[j];
-// 
-        lock.unlock();
+            // lock_string.unlock();
+            // marquee_display_buffer = empty_string;
+        }
 
-        lock_string.unlock();
-        // marquee_display_buffer = empty_string;
-
-
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(SPEED));
-        marquee_display_buffer = "";
-        i++;
-
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(SPEED));
+            marquee_display_buffer = "";
+            i++;
+        }
     }
 }
 
