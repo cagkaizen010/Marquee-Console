@@ -134,7 +134,7 @@ int main() {
     std::thread keyboard_handler_thread(keyboard_handler_thread_func);
 
 
-    // Main loop that processes commands from the queue.
+    // Main loop that processes commands from the queue
     while (is_running) {
 
         std::string command_line;
