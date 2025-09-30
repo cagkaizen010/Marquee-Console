@@ -22,8 +22,6 @@ void display_menu() {
     printf("\n");
 }
 void help() {
-//     system("cls");
-    // printf("\n");
 
     printf("\n");
     printf("\tCOMMANDS\t\tDESCRIPTION\n");

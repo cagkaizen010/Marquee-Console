@@ -31,7 +31,6 @@ std::mutex marquee_to_display_mutex;
 
 
 //// User created variables
-
 std::atomic<int> SPEED(200);
 std::string TEXT_x = "HELLO WORLD";
 std::mutex string_mutex;
@@ -41,6 +40,9 @@ std::mutex string_mutex;
 void gotoxy(int x, int y) {
     std::cout << "\033[" << y << ";" << x << "H";
 }
+
+// set_speed 100
+
 
 // --- Thread Functions ---
 void keyboard_handler_thread_func() {
@@ -55,17 +57,20 @@ void keyboard_handler_thread_func() {
     }
 }
 
-
 void marquee_logic_thread_func(int display_width) {
 
     std::string display_string = "";
     std::string beginning_pad = "";
+
     while (is_running) {
+
             display_string = "";
             beginning_pad = "";
         {
             std::unique_lock<std::mutex> lock_string(string_mutex);
+
             display_string += TEXT_x;
+
             for(int i = 0; i < TEXT_x.length(); i++){
                 display_string += " ";
                 beginning_pad += " ";
@@ -77,13 +82,16 @@ void marquee_logic_thread_func(int display_width) {
 
             for(int i = 0; i < 2* beginning_pad.length(); i++){
                 std::unique_lock<std::mutex> marquee_lock(marquee_to_display_mutex);
+
                 marquee_display_buffer = display_string.substr(i, beginning_pad.length());
 
                 std::this_thread::sleep_for(std::chrono::milliseconds(SPEED));
             }
         }
     }
+
 }
+
 
 void display_thread_func() {
     const int refresh_rate_ms = 50;
@@ -98,7 +106,6 @@ void display_thread_func() {
         if (prompt_display_buffer == "start_marquee"){
             system("cls");
             std::cout << marquee_display_buffer << std::endl;
-              
         }
 
         if (prompt_display_buffer == "stop_marquee"){
@@ -138,7 +145,8 @@ int main() {
                 command_queue.pop();
             }
         }
-         
+        
+        
         if (!command_line.empty()) {
             // Command processing logic goes here...
             std::string arg1;
@@ -192,7 +200,15 @@ int main() {
             }
 
             if(arg1 == "set_speed"){
-                SPEED = std::stoi(arg2);
+
+                try {
+
+                    SPEED = std::stoi(arg2);
+                }
+                catch(const std::invalid_argument& e){
+                    std::cout << "Please enter a number." << std::endl;
+
+                }
             }
 
             if(arg1 == "set_text"){
