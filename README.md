@@ -16,5 +16,5 @@ After successful compilation, run the program with:
 ```
 
 ## Authors
-**Kaizen Edwin Rodriguez**
+**Kaizen Edwin Rodriguez**<br>
 **Enrico Jose Asuncion**
