@@ -176,8 +176,10 @@ int main() {
             }
 
             if (arg1 == "exit") {
-                printf("\nPress the enter key to exit...");
+
+                // printf("\nPress the enter key to exit...");
                 is_running = false;
+
             }
 
 
@@ -220,18 +222,23 @@ int main() {
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
-
+    std::cout << "Exiting the application..." << std::endl;
     // Join threads to ensure they finish cleanly.
     if (marquee_logic_thread.joinable()) {
         marquee_logic_thread.join();
     }
+    std::cout << "Thread one finished successfully..." << std::endl;
     if (display_thread.joinable()) {
         display_thread.join();
     }
+    std::cout << "Thread two finished successfully..." << std::endl;
     if (keyboard_handler_thread.joinable()) {
         keyboard_handler_thread.join();
     }
+    std::cout << "Thread three finished successfully..." << std::endl;
+    std::cout << "Exiting..." << std::endl;
 
+    exit(0);
     return 0;
 }
 
